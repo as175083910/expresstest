@@ -67,8 +67,13 @@ app.get('/ab(cd)?e', function (req, res) {
     res.send('ab(cd)?e');
 });
 
-//使用正则表达式的路由路径示例
+//  使用正则表达式的路由路径示例
 //  匹配任何路径中含有a的路径:
 app.get(/a/, function(req, res) {
     res.send('/a/');
+});
+
+//  匹配butterfly, dragonfly, 不匹配 butterflyman， dragonfly man等
+app.get(/.*fly$/, function (req, res) {
+    res.send('/.*fly$/');
 });
