@@ -77,3 +77,86 @@ app.get(/a/, function(req, res) {
 app.get(/.*fly$/, function (req, res) {
     res.send('/.*fly$/');
 });
+
+//  Route parameters
+//  Route path: /users/:userId/books/:bookId
+//  Request URL: http://localhost:3000/users/34/books/8989
+//  req.params: { "userId": "34", "bookId": "8989"}
+app.get('/users/:userId/book/:bookId', function (req, res) {
+    res.send(req.params);
+});
+
+//  Route path: /flights/:from-:to
+//  Request URL: http://localhost:3000/flights/LAX-SFO
+//  req.params: { "from": "LAX", "to": "SFO" }
+
+//  Route path: /plantae/:genus.:species
+//  Request URL: http://localhost:3000/plantae/Prunus.persica
+//  req.params: { "genus": "Prunus", "species": "persica" }
+
+//  append a regular expression in parentheses
+//  Route path: /user/:userId(\d+)
+//  Request URL: http://localhost:3000/user/42
+//  req.params: { "userId": "42" }
+
+//  Route handlers
+//  A single callback function can handle  aroute.For example:
+app.get('/example/a', function (req, res) {
+    res.send('Hello from A!');
+});
+
+//  More than one callback function with next object
+app.get('/example/b', function (req, res, next) {
+    console.log('the response will be sent by the next function ...');
+    next();
+}, function (req, res) {
+    res.send('Hello from B');
+});
+
+//  An array of callback functions can handle a route.For example:
+var cb0 = function (req, res, next) {
+    console.log('CB0');
+    next();
+};
+
+var cb1 = function (req, res, next) {
+    console.log('CB1');
+    next();
+};
+
+var cb2 = function (req,res) {
+    res.send('Hello from C!')
+}
+
+app.get('/example/c', [cb0, cb1, cb2])
+
+// A  combination of independent functions and arrays of functions can handle a route.For example:
+/* var cb0 = function (req, res, next) {
+    console.log('CB0')
+    next()
+}
+
+var cb1 = function (req, res, next) {
+    console.log('CB1')
+    next()
+} */
+
+app.get('/example/d', [cb0, cb1], function (req, res, next) {
+    console.log('the response will be sent by the next function ...')
+    next()
+}, function (req, res) {
+    res.send('Hello from D!')
+})
+
+//  Object.route链式调用
+app.route('/book')
+    .get(function (req, res) {
+        res.send('Get a random book');
+    })
+    .post(function (req, res) {
+        res.send('Add a book');
+    })
+    .put(function (req, res) {
+        res.send('Update the book');
+    });
+
