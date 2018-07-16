@@ -148,6 +148,16 @@ app.get('/example/d', [cb0, cb1], function (req, res, next) {
     res.send('Hello from D!')
 })
 
+//  Response methods
+// res.download() -- Prompt a file to be downloaded.
+// res.end() -- End the response process.
+// res.json() -- Send aJSON response.
+//  res.jsonp() -- Send aJOSN response with JSONP support.
+//  res.redirect() -- Redirect a request.
+//  res.send() -- Send a response of various types.
+//  res.sendFile() -- Send a file as an octet stream.
+//  res.sendStatus() -- set the response status code and send its string representation as the response body.
+
 //  Object.route链式调用
 app.route('/book')
     .get(function (req, res) {
@@ -160,3 +170,8 @@ app.route('/book')
         res.send('Update the book');
     });
 
+
+
+
+
+//  Then, load the router module in the app
